@@ -1,0 +1,9 @@
+<h1>Day is <%= @day %></h1>
+<%= for %{name: name, items: items} <- @restaurants do %>
+  <h2><%= name %></h2>
+  <ul>
+    <%= for item <- items do %>
+      <li><%= render_restaurant_items(item) %></li>
+    <% end %>
+  </ul>
+<% end %>
