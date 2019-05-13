@@ -10,9 +10,10 @@ defmodule Chalmersfood.Application do
     children = [
       # Start the Ecto repository
       # Start the endpoint when the application starts
-      ChalmersfoodWeb.Endpoint
+      ChalmersfoodWeb.Endpoint,
       # Starts a worker by calling: Chalmersfood.Worker.start_link(arg)
       # {Chalmersfood.Worker, arg},
+      Chalmersfood.Cache
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

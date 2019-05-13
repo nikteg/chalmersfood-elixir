@@ -1,3 +1,16 @@
 /* This file is for your main application css. */
 
-@import "./phoenix.css";
+/* @import "./phoenix.css"; */
+
+body,
+html {
+  height: auto;
+}
+
+body {
+  padding-top: 1em;
+}
+
+.ui.segment.restaurant {
+  margin: 0;
+}

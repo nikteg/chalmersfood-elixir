@@ -13,7 +13,7 @@ defmodule Chalmersfood.Restaurants.CarbonCloud do
 
       def fetch() do
         case get("https://carbonateapiprod.azurewebsites.net/api/v1/mealprovidingunits/#{id()}/dishoccurrences") do
-          {:ok, %{body: body}} ->
+          {:ok, %{body: body, status: status}} when status == 200 ->
             items_with_dates =
               for %{
                     "dishType" => %{"dishTypeName" => type},
@@ -26,11 +26,14 @@ defmodule Chalmersfood.Restaurants.CarbonCloud do
             ordered_items =
               items_with_dates
               |> Enum.sort_by(&CarbonCloud.parse_date(Map.get(&1, :date)))
-              |> Enum.sort_by(&CarbonCloud.type_sort_order(Map.get(&1, :type)))
+              |> Enum.sort_by(&type_sort_order(Map.get(&1, :type)))
               |> Enum.group_by(&Map.get(&1, :date), &Map.delete(&1, :date))
               |> Map.values()
 
             {:ok, ordered_items}
+
+          {:ok, _} ->
+            {:error, "Invalid ID"}
 
           {:error, _} = error ->
             error
@@ -44,16 +47,7 @@ defmodule Chalmersfood.Restaurants.CarbonCloud do
   end
 
   @callback id() :: String.t()
-
-  @sort_order [
-    "Classic Vegan",
-    "Classic Fisk",
-    "Classic Kött",
-    "Veckans Sallad",
-    "Express"
-  ]
-
-  def type_sort_order(type), do: Enum.find_index(@sort_order, &(&1 == type))
+  @callback type_sort_order(type :: term) :: term
 
   def datespan() do
     now = DateTime.utc_now()
@@ -92,6 +86,55 @@ defmodule Chalmersfood.Restaurants.Karresturangen do
 
   use CarbonCloud
 
+  @sort_order [
+    "Classic Vegan",
+    "Classic Fisk",
+    "Classic Kött",
+    "Veckans Sallad",
+    "Express"
+  ]
+
   def name(), do: "Kårresturangen"
   def id(), do: "21f31565-5c2b-4b47-d2a1-08d558129279"
+  def type_sort_order(type), do: Enum.find_index(@sort_order, &(&1 == type))
+end
+
+defmodule Chalmersfood.Restaurants.Express do
+  alias Chalmersfood.Restaurants.{CarbonCloud}
+
+  use CarbonCloud
+
+  @sort_order [
+    "Express",
+    "Express - Vegan"
+  ]
+
+  def name(), do: "Express"
+  def id(), do: "3d519481-1667-4cad-d2a3-08d558129279"
+  def type_sort_order(type), do: Enum.find_index(@sort_order, &(&1 == type))
+end
+
+defmodule Chalmersfood.Restaurants.Linsen do
+  alias Chalmersfood.Restaurants.{CarbonCloud}
+
+  use CarbonCloud
+
+  def name(), do: "Linsen"
+  def id(), do: "b672efaf-032a-4bb8-d2a5-08d558129279"
+  def type_sort_order(type), do: type
+end
+
+defmodule Chalmersfood.Restaurants.SMAK do
+  alias Chalmersfood.Restaurants.{CarbonCloud}
+
+  use CarbonCloud
+
+  @sort_order [
+    "Dagens",
+    "Veckans"
+  ]
+
+  def name(), do: "S.M.A.K."
+  def id(), do: "3ac68e11-bcee-425e-d2a8-08d558129279"
+  def type_sort_order(type), do: Enum.find_index(@sort_order, &(&1 == type))
 end

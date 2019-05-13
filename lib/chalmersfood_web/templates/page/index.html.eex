@@ -1,9 +1,39 @@
-<h1>Day is <%= @day %></h1>
-<%= for %{name: name, items: items} <- @restaurants do %>
-  <h2><%= name %></h2>
-  <ul>
-    <%= for item <- items do %>
-      <li><%= render_restaurant_items(item) %></li>
-    <% end %>
-  </ul>
+<div class="ui small stackable menu">
+  <div class="header item"><a href="/"><i class="circular inverted food icon"></i> Lunch v. <%= current_week() %></a></div>
+  <%= for {day, index} <- weekdays_with_index() do %>
+    <a href="?day=<%= index %>" class="<%= if @day == index do %>active <% end %>item"><%= day %></a>
+  <% end %>
+  <div class="menu right">
+    <a href="/purge" class="item secondary"><i class="trash outline alternate icon"></i> Purge cache</a>
+  </div>
+</div>
+<%= if info = get_flash(@conn, :info) do %>
+  <div class="ui positive message" role="alert"><%= info %></div>
+<% end %>
+<%= if error = get_flash(@conn, :error) do %>
+  <div class="ui error message" role="alert"><%= error %></div>
+<% end %>
+<%= for %{name: name, items: items, error: error} <- @restaurants do %>
+  <%= if error do %>
+    <div class="ui basic segment restaurant">
+      <h3 class="ui header"><%= name %></h3>
+      <div class="ui error message">
+        <%= error %>
+      </div>
+    </div>
+  <% else %>
+    <div class="ui basic segment restaurant">
+      <h3 class="ui header"><%= name %></h3>
+      <div class="ui list">
+        <%= for item <- Enum.at(items, @day) do %>
+          <div class="item">
+            <div class="content">
+              <i class="circular inverted food icon"></i>
+              <span><%= render_restaurant_item(item) %></span>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 <% end %>

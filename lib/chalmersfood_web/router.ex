@@ -12,5 +12,6 @@ defmodule ChalmersfoodWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/purge", PageController, :purge
   end
 end
