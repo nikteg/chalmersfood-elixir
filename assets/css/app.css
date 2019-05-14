@@ -14,3 +14,7 @@ body {
 .ui.segment.restaurant {
   margin: 0;
 }
+
+.restaurant .ui.header {
+  border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+}

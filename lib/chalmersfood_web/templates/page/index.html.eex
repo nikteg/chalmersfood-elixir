@@ -14,16 +14,13 @@
   <div class="ui error message" role="alert"><%= error %></div>
 <% end %>
 <%= for %{name: name, items: items, error: error} <- @restaurants do %>
-  <%= if error do %>
-    <div class="ui basic segment restaurant">
-      <h3 class="ui header"><%= name %></h3>
+  <div class="ui basic segment restaurant">
+    <h3 class="ui header"><%= name %></h3>
+    <%= if error do %>
       <div class="ui error message">
-        <%= error %>
+        <%= translate_restaurant_error(error) %>
       </div>
-    </div>
-  <% else %>
-    <div class="ui basic segment restaurant">
-      <h3 class="ui header"><%= name %></h3>
+    <% else %>
       <div class="ui list">
         <%= for item <- Enum.at(items, @day) do %>
           <div class="item">
@@ -34,6 +31,6 @@
           </div>
         <% end %>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 <% end %>

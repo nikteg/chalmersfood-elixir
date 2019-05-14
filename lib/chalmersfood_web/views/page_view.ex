@@ -19,4 +19,8 @@ defmodule ChalmersfoodWeb.PageView do
     {_year, week} = :calendar.iso_week_number()
     week
   end
+
+  def translate_restaurant_error(:nxdomain), do: "Could not connect to server"
+  def translate_restaurant_error(:timeout), do: "Connection to server timed out"
+  def translate_restaurant_error(error), do: error
 end
