@@ -13,7 +13,7 @@ defmodule Chalmersfood.Application do
       ChalmersfoodWeb.Endpoint,
       # Starts a worker by calling: Chalmersfood.Worker.start_link(arg)
       # {Chalmersfood.Worker, arg},
-      Chalmersfood.Cache
+      Chalmersfood.Restaurants
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

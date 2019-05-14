@@ -3,11 +3,8 @@ defmodule ChalmersfoodWeb.PageController do
 
   alias Chalmersfood.Restaurants
 
-  def index(%Plug.Conn{query_params: %{"day" => day}} = conn, params) do
+  def index(conn, %{"day" => day} = params) do
     weekday = day |> String.to_integer()
-
-    IO.inspect(day)
-
     index(conn, params, weekday)
   end
 
@@ -25,7 +22,7 @@ defmodule ChalmersfoodWeb.PageController do
   end
 
   defp index(conn, _params, day) do
-    render(conn, "index.html", %{day: rem(day, 5), restaurants: Restaurants.fetch!()})
+    render(conn, "index.html", %{day: rem(day, 5), restaurants: Restaurants.list()})
   end
 
   def purge(conn, _params) do

@@ -42,6 +42,7 @@ defmodule Chalmersfood.MixProject do
       {:hackney, "~> 1.14.0"},
       {:jason, "~> 1.0"},
       {:tzdata, "~> 1.0.0"},
+      {:floki, "~> 0.21.0"},
       {:plug_cowboy, "~> 2.0"}
     ]
   end
