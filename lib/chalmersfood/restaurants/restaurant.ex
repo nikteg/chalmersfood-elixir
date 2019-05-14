@@ -8,20 +8,9 @@ defmodule Chalmersfood.Restaurants.Restaurant do
       @behaviour Restaurant
 
       def run() do
-        name = name()
-
-        Logger.debug("[#{name}]: Fetching")
-
         case fetch() do
-          {:ok, data} ->
-            Logger.debug("[#{name}]: Parsing")
-
-            %{name: name, items: parse(data), error: nil}
-
-          {:error, error} ->
-            Logger.error("[#{name}]: Error: #{inspect(error)}")
-
-            %{name: name, items: [], error: error}
+          {:ok, data} -> {:ok, parse(data)}
+          {:error, _} = error -> error
         end
       end
     end

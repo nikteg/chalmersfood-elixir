@@ -3,20 +3,19 @@ defmodule ChalmersfoodWeb.PageController do
 
   alias Chalmersfood.Restaurants
 
-  def index(%Plug.Conn{query_params: query_params} = conn, params) do
-    weekday =
-      query_params
-      |> Map.get("day", "0")
-      |> String.to_integer()
+  def index(%Plug.Conn{query_params: %{"day" => day}} = conn, params) do
+    weekday = day |> String.to_integer()
+
+    IO.inspect(day)
 
     index(conn, params, weekday)
   end
 
   def index(conn, params) do
-    now = DateTime.utc_now()
+    {:ok, now} = DateTime.now("Europe/Stockholm")
 
     weekday =
-      if now.hour < 15 do
+      if now.hour < 14 do
         Date.day_of_week(now) - 1
       else
         Date.day_of_week(now)
