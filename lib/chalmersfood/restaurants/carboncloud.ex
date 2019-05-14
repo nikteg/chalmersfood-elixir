@@ -2,35 +2,20 @@ defmodule Chalmersfood.Restaurants.CarbonCloud do
   defmacro __using__(_) do
     quote do
       use Tesla
-
       alias Chalmersfood.Restaurants.{Restaurant, CarbonCloud}
+      use Restaurant
 
       plug Tesla.Middleware.Query, CarbonCloud.datespan()
       plug Tesla.Middleware.JSON
+      plug Tesla.Middleware.Timeout, timeout: 10_000
 
-      @behaviour Restaurant
       @behaviour CarbonCloud
 
+      @impl true
       def fetch() do
         case get("https://carbonateapiprod.azurewebsites.net/api/v1/mealprovidingunits/#{id()}/dishoccurrences") do
           {:ok, %{body: body, status: status}} when status == 200 ->
-            items_with_dates =
-              for %{
-                    "dishType" => %{"dishTypeName" => type},
-                    "displayNames" => display_names,
-                    "startDate" => start_date
-                  } <- body do
-                %{type: type, name: CarbonCloud.get_display_name(display_names), date: start_date}
-              end
-
-            ordered_items =
-              items_with_dates
-              |> Enum.sort_by(&CarbonCloud.parse_date(Map.get(&1, :date)))
-              |> Enum.sort_by(&type_sort_order(Map.get(&1, :type)))
-              |> Enum.group_by(&Map.get(&1, :date), &Map.delete(&1, :date))
-              |> Map.values()
-
-            {:ok, ordered_items}
+            {:ok, body}
 
           {:ok, _} ->
             {:error, "Invalid ID"}
@@ -40,8 +25,14 @@ defmodule Chalmersfood.Restaurants.CarbonCloud do
         end
       end
 
+      @impl true
       def parse(body) do
-        [["foo"], ["bar"]]
+        body
+        |> CarbonCloud.map_items_from_result()
+        |> Enum.sort_by(&CarbonCloud.parse_date(Map.get(&1, :date)))
+        |> Enum.sort_by(&type_sort_order(Map.get(&1, :type)))
+        |> Enum.group_by(&Map.get(&1, :date), &Map.delete(&1, :date))
+        |> Map.values()
       end
     end
   end
@@ -56,6 +47,16 @@ defmodule Chalmersfood.Restaurants.CarbonCloud do
     friday = Date.add(monday, 4)
 
     [startDate: Date.to_iso8601(monday), endDate: Date.to_iso8601(friday)]
+  end
+
+  def map_items_from_result(result) do
+    for %{
+          "dishType" => %{"dishTypeName" => type},
+          "displayNames" => display_names,
+          "startDate" => start_date
+        } <- result do
+      %{type: type, name: get_display_name(display_names), date: start_date}
+    end
   end
 
   def get_display_name(display_names), do: get_display_name(display_names, :swedish)
@@ -95,7 +96,11 @@ defmodule Chalmersfood.Restaurants.Karresturangen do
   ]
 
   def name(), do: "Kårresturangen"
+
+  @impl true
   def id(), do: "21f31565-5c2b-4b47-d2a1-08d558129279"
+
+  @impl true
   def type_sort_order(type), do: Enum.find_index(@sort_order, &(&1 == type))
 end
 
@@ -110,7 +115,11 @@ defmodule Chalmersfood.Restaurants.Express do
   ]
 
   def name(), do: "Express"
+
+  @impl true
   def id(), do: "3d519481-1667-4cad-d2a3-08d558129279"
+
+  @impl true
   def type_sort_order(type), do: Enum.find_index(@sort_order, &(&1 == type))
 end
 
@@ -120,7 +129,11 @@ defmodule Chalmersfood.Restaurants.Linsen do
   use CarbonCloud
 
   def name(), do: "Linsen"
+
+  @impl true
   def id(), do: "b672efaf-032a-4bb8-d2a5-08d558129279"
+
+  @impl true
   def type_sort_order(type), do: type
 end
 
@@ -135,6 +148,10 @@ defmodule Chalmersfood.Restaurants.SMAK do
   ]
 
   def name(), do: "S.M.A.K."
+
+  @impl true
   def id(), do: "3ac68e11-bcee-425e-d2a8-08d558129279"
+
+  @impl true
   def type_sort_order(type), do: Enum.find_index(@sort_order, &(&1 == type))
 end

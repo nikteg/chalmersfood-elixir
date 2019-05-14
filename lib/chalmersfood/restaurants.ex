@@ -9,12 +9,9 @@ defmodule Chalmersfood.Restaurants do
       Cache.get_value()
     else
       items =
-        for restaurant <- @restaurants do
-          case restaurant.fetch() do
-            {:ok, items} -> %{name: restaurant.name(), items: items, error: nil}
-            {:error, error} -> %{name: restaurant.name(), items: [], error: error}
-          end
-        end
+        @restaurants
+        |> Task.async_stream(& &1.run(), timeout: 10_000)
+        |> Enum.map(fn {:ok, result} -> result end)
 
       IO.inspect(items)
 

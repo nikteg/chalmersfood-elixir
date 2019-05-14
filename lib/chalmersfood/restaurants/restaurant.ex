@@ -1,12 +1,33 @@
 defmodule Chalmersfood.Restaurants.Restaurant do
-  @callback name() :: String.t
-  @callback fetch() :: {:ok, term} | {:error, String.t}
-  @callback parse(term) :: [[String.t]]
+  defmacro __using__(_) do
+    quote do
+      alias Chalmersfood.Restaurants.Restaurant
 
-  def run!(impl) do
-    case impl.fetch() do
-      {:ok, data} -> impl.parse(data)
-      {:error, error} -> raise error
+      require Logger
+
+      @behaviour Restaurant
+
+      def run() do
+        name = name()
+
+        Logger.debug("[#{name}]: Fetching")
+
+        case fetch() do
+          {:ok, data} ->
+            Logger.debug("[#{name}]: Parsing")
+
+            %{name: name, items: parse(data), error: nil}
+
+          {:error, error} ->
+            Logger.error("[#{name}]: Error: #{inspect(error)}")
+
+            %{name: name, items: [], error: error}
+        end
+      end
     end
   end
+
+  @callback name() :: String.t()
+  @callback fetch() :: {:ok, term} | {:error, String.t()}
+  @callback parse(term) :: [[String.t()]]
 end
