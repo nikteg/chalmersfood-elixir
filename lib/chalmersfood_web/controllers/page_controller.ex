@@ -22,7 +22,8 @@ defmodule ChalmersfoodWeb.PageController do
   end
 
   defp index(conn, _params, day) do
-    render(conn, "index.html", %{day: rem(day, 5), restaurants: Restaurants.list()})
+    day = day |> max(0) |> min(4)
+    render(conn, "index.html", %{day: day, restaurants: Restaurants.list()})
   end
 
   def purge(conn, _params) do
