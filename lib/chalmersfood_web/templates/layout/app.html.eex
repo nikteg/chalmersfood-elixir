@@ -13,5 +13,6 @@
     <main role="main" class="ui container">
       <%= render @view_module, @view_template, assigns %>
     </main>
+    <script src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

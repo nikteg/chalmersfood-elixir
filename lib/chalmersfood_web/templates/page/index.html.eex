@@ -1,9 +1,12 @@
-<div class="ui small stackable menu">
-  <div class="header item"><a href="/"><i class="circular inverted food icon"></i> Lunch v. <%= current_week() %></a></div>
+<div class="ui small stackable menu" id="menu">
+  <div class="header item">
+    <a href="/"><i class="circular inverted food icon"></i> Lunch v. <%= current_week() %></a>
+    <button class="ui icon button"><i class="bars icon"></i></button>
+  </div>
   <%= for {day, index} <- weekdays_with_index() do %>
-    <a href="?day=<%= index %>" class="<%= if @day == index do %>active <% end %>item"><%= day %></a>
+    <a href="?day=<%= index %>" class="<%= if @day == index do %>active <% end %>item mobile"><%= day %></a>
   <% end %>
-  <div class="menu right">
+  <div class="menu right mobile">
     <a href="/purge" class="item secondary"><i class="trash outline alternate icon"></i> Purge cache</a>
   </div>
 </div>

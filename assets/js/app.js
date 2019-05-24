@@ -15,3 +15,29 @@ import "../css/app.css";
 //
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
+
+const menu = document.querySelector("#menu");
+const button = menu.querySelector("button");
+
+button.classList.add("mobile", "only");
+const responsive_elems = menu.querySelectorAll(".mobile");
+for (const elem of responsive_elems) {
+  elem.classList.add("hidden");
+}
+
+button &&
+  button.addEventListener("click", () => {
+    const responsive_elems = menu.querySelectorAll(".mobile");
+
+    for (const elem of responsive_elems) {
+      elem.classList.toggle("hidden");
+    }
+
+    const icon = button.querySelector("i");
+
+    if (icon.classList.contains("x")) {
+      icon.classList.replace("x", "bars");
+    } else {
+      icon.classList.replace("bars", "x");
+    }
+  });
