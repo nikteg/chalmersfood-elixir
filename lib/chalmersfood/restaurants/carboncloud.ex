@@ -7,8 +7,8 @@ defmodule Chalmersfood.Restaurants.CarbonCloud do
 
       plug Tesla.Middleware.Query, CarbonCloud.datespan()
       plug Tesla.Middleware.JSON
-      # plug Tesla.Middleware.Timeout, timeout: 10_000
-      plug Tesla.Middleware.Retry, delay: 500, max_retries: 10
+      plug Tesla.Middleware.Timeout, timeout: 10_000
+      # plug Tesla.Middleware.Retry, delay: 500, max_retries: 10
 
       @behaviour CarbonCloud
 
