@@ -26,7 +26,7 @@ defmodule ChalmersfoodWeb.PageController do
     render(conn, "index.html", %{day: day, restaurants: Restaurants.list()})
   end
 
-  def purge(conn, _params) do
+  def refetch(conn, _params) do
     Restaurants.purge_cache()
 
     conn
