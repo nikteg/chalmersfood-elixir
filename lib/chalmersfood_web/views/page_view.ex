@@ -20,7 +20,7 @@ defmodule ChalmersfoodWeb.PageView do
     week
   end
 
-  def translate_restaurant_error(:nxdomain), do: "Could not connect to server"
-  def translate_restaurant_error(:timeout), do: "Connection to server timed out"
+  def translate_restaurant_error(:nxdomain), do: "Could not connect to server. DNS could not resolve the hostname."
+  def translate_restaurant_error(:timeout), do: "Connection to server timed out. Try forcing a refetch."
   def translate_restaurant_error(error), do: error
 end
