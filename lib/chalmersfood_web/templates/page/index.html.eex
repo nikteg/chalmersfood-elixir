@@ -25,7 +25,7 @@
       </div>
     <% else %>
       <div class="ui list">
-        <%= for item <- Enum.at(items, @day) do %>
+        <%= for item <- Enum.at(items, @day) || ["Ingen lunch"] do %>
           <div class="item">
             <div class="content">
               <i class="circular inverted food icon"></i>
