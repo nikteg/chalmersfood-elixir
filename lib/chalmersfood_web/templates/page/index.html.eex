@@ -7,7 +7,7 @@
     <a href="?day=<%= index %>" class="<%= if @day == index do %>active <% end %>item mobile"><%= day %></a>
   <% end %>
   <div class="menu right mobile">
-    <a href="/refetch" class="item secondary"><i class="redo icon"></i> Force refetch</a>
+    <a href="/refetch" class="item secondary"><i class="redo icon"></i> Tvinga omladdning</a>
   </div>
 </div>
 <%= if info = get_flash(@conn, :info) do %>

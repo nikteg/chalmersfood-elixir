@@ -43,7 +43,7 @@ defmodule Chalmersfood.Restaurants.CarbonCloud do
 
   def datespan() do
     now = DateTime.utc_now()
-    weekday = Date.day_of_week(DateTime.utc_now()) - 1
+    weekday = Date.day_of_week(now) - 1
     monday = Date.add(now, -weekday)
     friday = Date.add(monday, 4)
 

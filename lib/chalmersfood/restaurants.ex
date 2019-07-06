@@ -1,7 +1,7 @@
 defmodule Chalmersfood.Restaurants do
-  alias Chalmersfood.Restaurants.{Karresturangen, Express, Linsen, SMAK, Einstein}
+  alias Chalmersfood.Restaurants.{Karresturangen, Express, Linsen, SMAK, Einstein, Wijkanders}
 
-  @restaurants [Karresturangen, Express, Linsen, SMAK, Einstein]
+  @restaurants [Karresturangen, Express, Linsen, SMAK, Einstein, Wijkanders]
   @lifetime 1_800_000
 
   use GenServer
