@@ -15,12 +15,18 @@ defmodule ChalmersfoodWeb.PageView do
     Enum.with_index(@weekdays)
   end
 
-  def current_week() do
+  def header_text() do
     {_year, week} = :calendar.iso_week_number()
-    week
+
+    now = DateTime.utc_now()
+    weekday = Date.day_of_week(now) - 1
+    monday = Date.add(now, -weekday)
+    friday = Date.add(monday, 4)
+
+    "Lunch v. #{week} (#{monday.day}/#{monday.month} - #{friday.day}/#{friday.month})"
   end
 
-  def translate_restaurant_error(:nxdomain), do: "Could not connect to server. DNS could not resolve the hostname."
-  def translate_restaurant_error(:timeout), do: "Connection to server timed out. Try forcing a refetch."
+  def translate_restaurant_error(:nxdomain), do: "Kunde inte ansluta till servern. DNS kunde inte hitta adressen."
+  def translate_restaurant_error(:timeout), do: "Anslutningen till servern tog för lång tid. Testa 'tvinga omladdning'."
   def translate_restaurant_error(error), do: error
 end

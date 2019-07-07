@@ -96,7 +96,11 @@ defmodule Chalmersfood.Restaurants.Karresturangen do
     "Express"
   ]
 
+  @impl true
   def name(), do: "Kårresturangen"
+
+  @impl true
+  def url(), do: "https://chalmerskonferens.se/en/restauranger/johanneberg/karrestaurangen/"
 
   @impl true
   def id(), do: "21f31565-5c2b-4b47-d2a1-08d558129279"
@@ -115,7 +119,11 @@ defmodule Chalmersfood.Restaurants.Express do
     "Express - Vegan"
   ]
 
+  @impl true
   def name(), do: "Express"
+
+  @impl true
+  def url(), do: "https://chalmerskonferens.se/en/restauranger/johanneberg/express/"
 
   @impl true
   def id(), do: "3d519481-1667-4cad-d2a3-08d558129279"
@@ -129,7 +137,11 @@ defmodule Chalmersfood.Restaurants.Linsen do
 
   use CarbonCloud
 
+  @impl true
   def name(), do: "Linsen"
+
+  @impl true
+  def url(), do: "https://chalmerskonferens.se/en/restauranger/johanneberg/restaurangcafe-linsen/"
 
   @impl true
   def id(), do: "b672efaf-032a-4bb8-d2a5-08d558129279"
@@ -148,7 +160,11 @@ defmodule Chalmersfood.Restaurants.SMAK do
     "Veckans"
   ]
 
+  @impl true
   def name(), do: "S.M.A.K."
+
+  @impl true
+  def url(), do: "https://chalmerskonferens.se/en/restauranger/johanneberg/smak/"
 
   @impl true
   def id(), do: "3ac68e11-bcee-425e-d2a8-08d558129279"

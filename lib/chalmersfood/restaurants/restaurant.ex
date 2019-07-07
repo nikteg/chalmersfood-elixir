@@ -17,6 +17,7 @@ defmodule Chalmersfood.Restaurants.Restaurant do
   end
 
   @callback name() :: String.t()
+  @callback url() :: String.t()
   @callback fetch() :: {:ok, term} | {:error, String.t()}
   @callback parse(term) :: [[String.t()]]
 end

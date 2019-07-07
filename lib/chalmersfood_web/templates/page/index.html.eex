@@ -1,6 +1,6 @@
 <div class="ui small stackable menu" id="menu">
   <div class="header item">
-    <a href="/"><i class="circular inverted food icon"></i> Lunch v. <%= current_week() %></a>
+    <a href="/"><i class="circular inverted food icon"></i><%= header_text() %></a>
     <button class="ui icon button"><i class="bars icon"></i></button>
   </div>
   <%= for {day, index} <- weekdays_with_index() do %>
@@ -16,9 +16,9 @@
 <%= if error = get_flash(@conn, :error) do %>
   <div class="ui error message" role="alert"><%= error %></div>
 <% end %>
-<%= for %{name: name, items: items, error: error} <- @restaurants do %>
+<%= for %{name: name, url: url, items: items, error: error} <- @restaurants do %>
   <div class="ui basic segment restaurant">
-    <h3 class="ui header"><%= name %></h3>
+    <h3 class="ui header"><a href="<%= url %>"><%= name %></a></h3>
     <%= if error do %>
       <div class="ui error message">
         <%= translate_restaurant_error(error) %>

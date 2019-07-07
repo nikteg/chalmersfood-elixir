@@ -10,6 +10,9 @@ defmodule Chalmersfood.Restaurants.Wijkanders do
   def name(), do: "Wijkanders"
 
   @impl true
+  def url(), do: "https://wijkanders.se"
+
+  @impl true
   def fetch() do
     case get("https://wijkanders.se/restaurangen/", opts: [adapter: [:insecure]]) do
       {:ok, %{body: body}} ->

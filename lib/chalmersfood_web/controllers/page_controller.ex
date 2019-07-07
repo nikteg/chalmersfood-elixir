@@ -30,7 +30,7 @@ defmodule ChalmersfoodWeb.PageController do
     Restaurants.purge_cache()
 
     conn
-    |> put_flash(:info, "The cache has been purged and fresh data has been fetched!")
+    |> put_flash(:info, "Lunchmenyerna har hämtats på nytt!")
     |> redirect(to: Routes.page_path(conn, :index))
   end
 end

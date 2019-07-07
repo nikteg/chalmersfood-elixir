@@ -10,6 +10,9 @@ defmodule Chalmersfood.Restaurants.Einstein do
   def name(), do: "Einstein"
 
   @impl true
+  def url(), do: "http://restaurang-einstein.se/"
+
+  @impl true
   def fetch() do
     case get("http://restaurang-einstein.se/") do
       {:ok, %{body: body}} ->
