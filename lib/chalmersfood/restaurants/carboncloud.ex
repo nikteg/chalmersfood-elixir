@@ -172,3 +172,51 @@ defmodule Chalmersfood.Restaurants.SMAK do
   @impl true
   def type_sort_order(type), do: Enum.find_index(@sort_order, &(&1 == type))
 end
+
+defmodule Chalmersfood.Restaurants.LsKitchen do
+  alias Chalmersfood.Restaurants.{CarbonCloud}
+
+  use CarbonCloud
+
+  @sort_order [
+    "Kött",
+    "Fisk",
+    "Sallad",
+    "Vegan"
+  ]
+
+  @impl true
+  def name(), do: "L's Kitchen"
+
+  @impl true
+  def url(), do: "https://chalmerskonferens.se/en/restauranger/lindholmen/ls-kitchen/"
+
+  @impl true
+  def id(), do: "c74da2cf-aa1a-4d3a-9ba6-08d5569587a1"
+
+  @impl true
+  def type_sort_order(type), do: Enum.find_index(@sort_order, &(&1 == type))
+end
+
+defmodule Chalmersfood.Restaurants.KokBoken do
+  alias Chalmersfood.Restaurants.{CarbonCloud}
+
+  use CarbonCloud
+
+  @sort_order [
+    "Express",
+    "Vegan"
+  ]
+
+  @impl true
+  def name(), do: "Kokboken"
+
+  @impl true
+  def url(), do: "https://chalmerskonferens.se/en/restauranger/lindholmen/kokboken/"
+
+  @impl true
+  def id(), do: "4dce0df9-c6e7-46cf-d2a7-08d558129279"
+
+  @impl true
+  def type_sort_order(type), do: Enum.find_index(@sort_order, &(&1 == type))
+end
