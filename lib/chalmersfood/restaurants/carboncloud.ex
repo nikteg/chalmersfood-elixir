@@ -34,12 +34,19 @@ defmodule Chalmersfood.Restaurants.CarbonCloud do
         |> Enum.sort_by(&type_sort_order(Map.get(&1, :type)))
         |> Enum.group_by(&Map.get(&1, :date), &Map.delete(&1, :date))
         |> Map.values()
+        |> Enum.map(fn items -> items ++ extras() end)
       end
+
+      @impl true
+      def extras(), do: []
+
+      defoverridable extras: 0
     end
   end
 
   @callback id() :: String.t()
   @callback type_sort_order(type :: term) :: term
+  @callback extras() :: [%{name: String.t(), type: String.t()}]
 
   def datespan() do
     now = DateTime.utc_now()
@@ -148,6 +155,15 @@ defmodule Chalmersfood.Restaurants.Linsen do
 
   @impl true
   def type_sort_order(type), do: type
+
+  @impl true
+  def extras(),
+    do: [
+      %{type: "Stående", name: "Wokade nudlar med kyckling/tofu och grönsaker
+smaksatt med ingefära och chili"},
+      %{type: "Stående", name: "Caesarsallad med kyckling, bacon, romansallad,
+grana padana och krutonger samt dressing"}
+    ]
 end
 
 defmodule Chalmersfood.Restaurants.SMAK do
