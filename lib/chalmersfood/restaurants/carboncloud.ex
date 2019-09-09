@@ -30,8 +30,8 @@ defmodule Chalmersfood.Restaurants.CarbonCloud do
       def parse(body) do
         body
         |> CarbonCloud.map_items_from_result()
-        |> Enum.sort_by(&CarbonCloud.parse_date(Map.get(&1, :date)))
         |> Enum.sort_by(&type_sort_order(Map.get(&1, :type)))
+        |> Enum.sort_by(&Map.get(&1, :date))
         |> Enum.group_by(&Map.get(&1, :date), &Map.delete(&1, :date))
         |> Map.values()
         |> Enum.map(fn items -> items ++ extras() end)
@@ -63,7 +63,7 @@ defmodule Chalmersfood.Restaurants.CarbonCloud do
           "displayNames" => display_names,
           "startDate" => start_date
         } <- result do
-      %{type: type, name: get_display_name(display_names), date: start_date}
+      %{type: type, name: get_display_name(display_names), date: parse_date(start_date)}
     end
   end
 
