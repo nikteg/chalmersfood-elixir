@@ -31,9 +31,10 @@ defmodule Chalmersfood.Restaurants.CarbonCloud do
         body
         |> CarbonCloud.map_items_from_result()
         |> Enum.sort_by(&type_sort_order(Map.get(&1, :type)))
-        |> Enum.sort_by(&Map.get(&1, :date))
         |> Enum.group_by(&Map.get(&1, :date), &Map.delete(&1, :date))
-        |> Map.values()
+        |> Enum.to_list()
+        |> Enum.sort_by(fn {date, _items} -> Date.to_erl(date) end)
+        |> Keyword.values()
         |> Enum.map(fn items -> items ++ extras() end)
       end
 
