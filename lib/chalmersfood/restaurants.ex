@@ -61,7 +61,7 @@ defmodule Chalmersfood.Restaurants do
 
   defp fetch() do
     @restaurants
-    |> Task.async_stream(& &1.run(), timeout: 20000, on_timeout: :kill_task)
+    |> Task.async_stream(& &1.run(), timeout: 30000, on_timeout: :kill_task)
     |> Enum.zip(@restaurants)
     |> Enum.map(fn
       {{:exit, :timeout}, restaurant} ->

@@ -3,7 +3,7 @@ defmodule Chalmersfood.Restaurants.Einstein do
   alias Chalmersfood.Restaurants.Restaurant
   use Restaurant
 
-  plug Tesla.Middleware.Timeout, timeout: 15_000
+  plug Tesla.Middleware.Timeout, timeout: 20_000
   # plug Tesla.Middleware.Retry, delay: 500, max_retries: 10
 
   @impl true
