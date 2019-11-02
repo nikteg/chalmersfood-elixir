@@ -11,6 +11,8 @@ defmodule ChalmersfoodWeb.Endpoint do
     gzip: false,
     only: ~w(css fonts images js favicon.png robots.txt)
 
+  socket "/live", Phoenix.LiveView.Socket
+
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do

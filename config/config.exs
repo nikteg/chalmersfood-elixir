@@ -12,7 +12,10 @@ config :chalmersfood, ChalmersfoodWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "WOB6KCmpW6pTbQGnf5kIb9h2WIFRf6N2145jv9/bj7dNNDCvRXal4DlYfvxPAmnv",
   render_errors: [view: ChalmersfoodWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Chalmersfood.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Chalmersfood.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [
+    signing_salt: "SECRET_SALT"
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -23,8 +26,6 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 config :tesla, adapter: Tesla.Adapter.Hackney
-
-config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

@@ -5,13 +5,13 @@ defmodule ChalmersfoodWeb.Router do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
+    plug Phoenix.LiveView.Flash
     plug :put_secure_browser_headers
   end
 
   scope "/", ChalmersfoodWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
-    get "/refetch", PageController, :refetch
+    live "/", MenuLive
   end
 end

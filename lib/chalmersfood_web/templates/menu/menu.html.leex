@@ -1,20 +1,24 @@
 <div class="ui small stackable menu" id="menu">
   <div class="header item">
-    <a href="/"><i class="circular inverted food icon"></i><%= header_text() %></a>
+    <%= live_link to: Routes.live_path(@socket, ChalmersfoodWeb.MenuLive) do %>
+      <i class="circular inverted food icon"></i><%= header_text() %>
+    <% end %>
     <button class="ui icon button"><i class="bars icon"></i></button>
   </div>
   <%= for {day, index} <- weekdays_with_index() do %>
-    <a href="?day=<%= index %>" class="<%= if @day == index do %>active <% end %>item mobile"><%= day %></a>
+    <%= live_link day, to: Routes.live_path(@socket, ChalmersfoodWeb.MenuLive, day: index), class: if @day == index, do: "active item mobile", else: "item mobile" %>
   <% end %>
   <div class="menu right mobile">
-    <a href="/refetch" class="item secondary"><i class="redo icon"></i> Tvinga omladdning</a>
+    <%= live_link to: Routes.live_path(@socket, ChalmersfoodWeb.MenuLive, day: @day), class: "item secondary", phx_click: "refetch" do %>
+      <i class="redo icon"></i> Tvinga omladdning
+    <% end %>
   </div>
 </div>
-<%= if info = get_flash(@conn, :info) do %>
-  <div class="ui positive message" role="alert"><%= info %></div>
+<%= if @info do %>
+  <div class="ui positive message" role="alert"><%= @info %></div>
 <% end %>
-<%= if error = get_flash(@conn, :error) do %>
-  <div class="ui error message" role="alert"><%= error %></div>
+<%= if @error do %>
+  <div class="ui error message" role="alert"><%= @error %></div>
 <% end %>
 <%= for %{name: name, url: url, items: items, error: error} <- @restaurants do %>
   <div class="ui basic segment restaurant">
