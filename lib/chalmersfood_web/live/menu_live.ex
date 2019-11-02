@@ -15,7 +15,7 @@ defmodule ChalmersfoodWeb.MenuLive do
 
     {:ok,
      assign(socket,
-       day: 0,
+       day: get_today(),
        info: nil,
        error: nil,
        restaurants: restaurants
@@ -47,7 +47,20 @@ defmodule ChalmersfoodWeb.MenuLive do
   end
 
   def handle_params(_params, _uri, socket) do
-    day = 0
+    day = get_today()
     {:noreply, assign(socket, :day, day)}
+  end
+
+  def get_today() do
+    {:ok, now} = DateTime.now("Europe/Stockholm")
+
+    weekday =
+      if now.hour < 14 do
+        Date.day_of_week(now) - 1
+      else
+        Date.day_of_week(now)
+      end
+
+    weekday |> max(0) |> min(4)
   end
 end

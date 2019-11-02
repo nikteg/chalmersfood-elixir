@@ -43,6 +43,7 @@ defmodule Chalmersfood.MixProject do
       {:jason, "~> 1.0"},
       {:floki, "~> 0.21.0"},
       {:plug_cowboy, "~> 2.0"},
+      {:tzdata, "~> 1.0.1"},
       {:phoenix_live_view, "~> 0.3.0"}
     ]
   end
