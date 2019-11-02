@@ -11,7 +11,7 @@ defmodule ChalmersfoodWeb.Endpoint do
     gzip: false,
     only: ~w(css fonts images js favicon.png robots.txt)
 
-  socket "/live", Phoenix.LiveView.Socket
+  socket "/live", Phoenix.LiveView.Socket, check_origin: ["//localhost", "//mat.sodapop.se", "//lunch.sodapop.se"]
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
