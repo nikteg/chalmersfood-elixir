@@ -3,34 +3,17 @@ defmodule ChalmersfoodWeb.PageController do
 
   alias Chalmersfood.Restaurants
 
-  def index(conn, %{"day" => day} = params) do
-    weekday = day |> String.to_integer()
-    index(conn, params, weekday)
-  end
-
-  def index(conn, params) do
-    {:ok, now} = DateTime.now("Europe/Stockholm")
-
-    weekday =
-      if now.hour < 14 do
-        Date.day_of_week(now) - 1
-      else
-        Date.day_of_week(now)
-      end
-
-    index(conn, params, weekday)
-  end
-
-  defp index(conn, _params, day) do
-    day = day |> max(0) |> min(4)
-    render(conn, "index.html", %{day: day, restaurants: Restaurants.list()})
+  def index(conn, _params) do
+    render(conn, "index.html")
   end
 
   def refetch(conn, _params) do
     Restaurants.purge_cache()
 
-    conn
-    |> put_flash(:info, "Lunchmenyerna har hämtats på nytt!")
-    |> redirect(to: Routes.page_path(conn, :index))
+    put_status(conn, :ok)
+  end
+
+  def fetch(conn, _params) do
+    json(conn, Restaurants.list())
   end
 end
