@@ -15,6 +15,7 @@ defmodule ChalmersfoodWeb.MenuLive do
 
     {:ok,
      assign(socket,
+       menu_open: false,
        day: get_today(),
        info: nil,
        error: nil,
@@ -34,6 +35,10 @@ defmodule ChalmersfoodWeb.MenuLive do
        restaurants: restaurants,
        info: "Lunchmenyerna har hämtats på nytt!"
      )}
+  end
+
+  def handle_event("toggle_menu", _event, socket) do
+    {:noreply, assign(socket, menu_open: !socket.assigns.menu_open)}
   end
 
   def handle_info({:clear, key}, socket) do
