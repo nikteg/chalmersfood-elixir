@@ -11,7 +11,7 @@ use Mix.Config
 # before starting your production server.
 config :chalmersfood, ChalmersfoodWeb.Endpoint,
   http: [:inet6, port: System.get_env("PORT") || 4000],
-  url: [scheme: "https", host: "mat.sodapop.se", port: 443],
+  url: [scheme: "https", host: nil, port: 443],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
