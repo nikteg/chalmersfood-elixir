@@ -20,24 +20,26 @@
 <%= if @error do %>
   <div class="ui error message" role="alert"><%= @error %></div>
 <% end %>
-<%= for %{name: name, url: url, items: items, error: error} <- @restaurants do %>
-  <div class="ui basic segment restaurant">
-    <h3 class="ui header"><a href="<%= url %>"><%= name %></a></h3>
-    <%= if error do %>
-      <div class="ui error message">
-        <%= translate_restaurant_error(error) %>
-      </div>
-    <% else %>
-      <div class="ui list">
-        <%= for item <- Enum.at(items, @day) || ["Ingen lunch"] do %>
-          <div class="item">
-            <div class="content">
-              <i class="circular inverted food icon"></i>
-              <span><%= render_restaurant_item(item) %></span>
+<div class="restaurants">
+  <%= for %{name: name, url: url, items: items, error: error} <- @restaurants do %>
+    <div class="ui basic segment restaurant">
+      <h3 class="ui header"><a href="<%= url %>"><%= name %></a></h3>
+      <%= if error do %>
+        <div class="ui error message">
+          <%= translate_restaurant_error(error) %>
+        </div>
+      <% else %>
+        <div class="ui list">
+          <%= for item <- Enum.at(items, @day) || ["Ingen lunch"] do %>
+            <div class="item">
+              <div class="content">
+                <i class="circular inverted food icon"></i>
+                <span><%= render_restaurant_item(item) %></span>
+              </div>
             </div>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

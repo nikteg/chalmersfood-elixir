@@ -32,3 +32,15 @@ body {
 #menu button {
   margin: -0.5em;
 }
+
+.restaurants {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 0.5em;
+}
+
+@media only screen and (max-width: 991px) {
+  .restaurants {
+    grid-template-columns: auto;
+  }
+}
