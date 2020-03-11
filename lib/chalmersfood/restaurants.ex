@@ -65,6 +65,7 @@ defmodule Chalmersfood.Restaurants do
     |> Enum.zip(@restaurants)
     |> Enum.map(fn
       {{:exit, :timeout}, restaurant} ->
+        %{name: restaurant.name(), url: restaurant.url(), items: [], error: :timeout}
 
       {{:ok, result}, restaurant} ->
         case result do
