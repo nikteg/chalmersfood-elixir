@@ -1,7 +1,7 @@
 defmodule Chalmersfood.Restaurants do
   alias Chalmersfood.Restaurants.{Karresturangen, Express, Linsen, SMAK, Einstein, Wijkanders, LsKitchen, KokBoken}
 
-  @restaurants [Karresturangen, Express, Linsen, SMAK, Einstein, Wijkanders, LsKitchen, KokBoken]
+  @restaurants [Karresturangen, Express, Linsen, SMAK, Einstein, LsKitchen, KokBoken]
   @lifetime 1_800_000
 
   use GenServer
@@ -52,7 +52,7 @@ defmodule Chalmersfood.Restaurants do
   end
 
   def list() do
-    GenServer.call(__MODULE__, :get_restaurants, 25000)
+    GenServer.call(__MODULE__, :get_restaurants, 35000)
   end
 
   def purge_cache() do
@@ -61,11 +61,10 @@ defmodule Chalmersfood.Restaurants do
 
   defp fetch() do
     @restaurants
-    |> Task.async_stream(& &1.run(), timeout: 30000, on_timeout: :kill_task)
+    |> Task.async_stream(& &1.run(), timeout: 40000, on_timeout: :kill_task)
     |> Enum.zip(@restaurants)
     |> Enum.map(fn
       {{:exit, :timeout}, restaurant} ->
-        %{name: restaurant.name(), url: restaurant.url(), items: [], error: :timeout}
 
       {{:ok, result}, restaurant} ->
         case result do

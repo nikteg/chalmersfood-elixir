@@ -7,14 +7,18 @@ defmodule Chalmersfood.Restaurants.CarbonCloud do
 
       plug Tesla.Middleware.Query, CarbonCloud.datespan()
       plug Tesla.Middleware.JSON
-      plug Tesla.Middleware.Timeout, timeout: 20_000
+      plug Tesla.Middleware.Timeout, timeout: 30_000
+      plug Tesla.Middleware.Logger
+
       # plug Tesla.Middleware.Retry, delay: 500, max_retries: 10
 
       @behaviour CarbonCloud
 
       @impl true
       def fetch() do
-        case get("https://carbonateapiprod.azurewebsites.net/api/v1/mealprovidingunits/#{id()}/dishoccurrences") do
+        case get("https://carbonateapiprod.azurewebsites.net/api/v1/mealprovidingunits/#{id()}/dishoccurrences",
+               opts: [adapter: [recv_timeout: 30_000]]
+             ) do
           {:ok, %{body: body, status: status}} when status == 200 ->
             {:ok, body}
 
